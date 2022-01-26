@@ -1,0 +1,39 @@
+﻿<Page x:Class="demofootball.footballmatches"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:demofootball"
+      mc:Ignorable="d" 
+      d:DesignHeight="1024" d:DesignWidth="1280"
+      Title="footballmatches" ShowsNavigationUI="False" IsVisibleChanged="Page_IsVisibleChanged">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="390*"/>
+            <RowDefinition Height="60*"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="FMDG" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Дата футбольного матча" Binding="{Binding date_footballmatches}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Название команды 1" Binding="{Binding name_comand}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Название команды 2" Binding="{Binding name_comand2}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Счет" Binding="{Binding point}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Город проведения матча" Binding="{Binding place_footballmatches}"></DataGridTextColumn>
+                <!--<DataGridTextColumn Width="*" Header="Город команды 1"  Binding="{Binding teams.city}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Город команды 2" Binding="{Binding teams.city}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Игроки команды 1" Binding="{Binding footballplayers.FIO}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Игроки команды 2" Binding="{Binding footballplayers.FIO}"></DataGridTextColumn>-->
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="Edit" Content="Редактировать" Click="Edit_Click"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="Add" Content="Добавить" HorizontalAlignment="Left" Grid.Row="2" Width="640" Click="ADD_Click"></Button>
+        <Button x:Name="Del" Content="Удалить" HorizontalAlignment="Right" Grid.Row="2" Width="640" Click="ADD_Click"></Button>
+    </Grid>
+</Page>

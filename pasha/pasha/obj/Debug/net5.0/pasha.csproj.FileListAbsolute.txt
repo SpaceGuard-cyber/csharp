@@ -1,0 +1,16 @@
+C:\Users\miham\source\repos\pasha\pasha\bin\Debug\net5.0\pasha.exe
+C:\Users\miham\source\repos\pasha\pasha\bin\Debug\net5.0\pasha.deps.json
+C:\Users\miham\source\repos\pasha\pasha\bin\Debug\net5.0\pasha.runtimeconfig.json
+C:\Users\miham\source\repos\pasha\pasha\bin\Debug\net5.0\pasha.runtimeconfig.dev.json
+C:\Users\miham\source\repos\pasha\pasha\bin\Debug\net5.0\pasha.dll
+C:\Users\miham\source\repos\pasha\pasha\bin\Debug\net5.0\ref\pasha.dll
+C:\Users\miham\source\repos\pasha\pasha\bin\Debug\net5.0\pasha.pdb
+C:\Users\miham\source\repos\pasha\pasha\obj\Debug\net5.0\pasha.csproj.AssemblyReference.cache
+C:\Users\miham\source\repos\pasha\pasha\obj\Debug\net5.0\pasha.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\miham\source\repos\pasha\pasha\obj\Debug\net5.0\pasha.AssemblyInfoInputs.cache
+C:\Users\miham\source\repos\pasha\pasha\obj\Debug\net5.0\pasha.AssemblyInfo.cs
+C:\Users\miham\source\repos\pasha\pasha\obj\Debug\net5.0\pasha.csproj.CoreCompileInputs.cache
+C:\Users\miham\source\repos\pasha\pasha\obj\Debug\net5.0\pasha.dll
+C:\Users\miham\source\repos\pasha\pasha\obj\Debug\net5.0\ref\pasha.dll
+C:\Users\miham\source\repos\pasha\pasha\obj\Debug\net5.0\pasha.pdb
+C:\Users\miham\source\repos\pasha\pasha\obj\Debug\net5.0\pasha.genruntimeconfig.cache

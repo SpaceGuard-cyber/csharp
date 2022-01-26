@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="demoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="id_client" />
+    </Key>
+    <Property Name="id_client" Type="int" Nullable="false" />
+    <Property Name="login" Type="nvarchar" MaxLength="50" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" />
+    <Property Name="id_club" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fintess_clubs">
+    <Key>
+      <PropertyRef Name="id_fitness_club" />
+    </Key>
+    <Property Name="id_fitness_club" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="address" Type="nvarchar" MaxLength="50" />
+    <Property Name="number" Type="nvarchar" MaxLength="50" />
+    <Property Name="waterpool" Type="nvarchar" MaxLength="50" />
+    <Property Name="start_work" Type="date" />
+    <Property Name="web_site" Type="nvarchar" MaxLength="100" />
+    <Property Name="id_lessons" Type="int" Nullable="false" />
+    <Property Name="id_types" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="lessons">
+    <Key>
+      <PropertyRef Name="id_lesson" />
+    </Key>
+    <Property Name="id_lesson" Type="int" Nullable="false" />
+    <Property Name="name_sport" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="methot" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="types_sport">
+    <Key>
+      <PropertyRef Name="id_types_sport" />
+    </Key>
+    <Property Name="id_types_sport" Type="int" Nullable="false" />
+    <Property Name="name_sport" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="discription" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_client_fintess_clubs">
+    <End Role="fintess_clubs" Type="Self.fintess_clubs" Multiplicity="1" />
+    <End Role="client" Type="Self.client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="fintess_clubs">
+        <PropertyRef Name="id_fitness_club" />
+      </Principal>
+      <Dependent Role="client">
+        <PropertyRef Name="id_club" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_fintess_clubs_lessons">
+    <End Role="lessons" Type="Self.lessons" Multiplicity="1" />
+    <End Role="fintess_clubs" Type="Self.fintess_clubs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lessons">
+        <PropertyRef Name="id_lesson" />
+      </Principal>
+      <Dependent Role="fintess_clubs">
+        <PropertyRef Name="id_lessons" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_fintess_clubs_types_sport">
+    <End Role="types_sport" Type="Self.types_sport" Multiplicity="1" />
+    <End Role="fintess_clubs" Type="Self.fintess_clubs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="types_sport">
+        <PropertyRef Name="id_types_sport" />
+      </Principal>
+      <Dependent Role="fintess_clubs">
+        <PropertyRef Name="id_types" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="demoModelStoreContainer">
+    <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="fintess_clubs" EntityType="Self.fintess_clubs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="lessons" EntityType="Self.lessons" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="types_sport" EntityType="Self.types_sport" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_client_fintess_clubs" Association="Self.FK_client_fintess_clubs">
+      <End Role="fintess_clubs" EntitySet="fintess_clubs" />
+      <End Role="client" EntitySet="client" />
+    </AssociationSet>
+    <AssociationSet Name="FK_fintess_clubs_lessons" Association="Self.FK_fintess_clubs_lessons">
+      <End Role="lessons" EntitySet="lessons" />
+      <End Role="fintess_clubs" EntitySet="fintess_clubs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_fintess_clubs_types_sport" Association="Self.FK_fintess_clubs_types_sport">
+      <End Role="types_sport" EntitySet="types_sport" />
+      <End Role="fintess_clubs" EntitySet="fintess_clubs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

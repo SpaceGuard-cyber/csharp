@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="demofootballModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="footballmatches">
+    <Key>
+      <PropertyRef Name="id_footballmatches" />
+    </Key>
+    <Property Name="id_footballmatches" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date_footballmatch" Type="nvarchar" MaxLength="50" />
+    <Property Name="name_comand" Type="nvarchar" MaxLength="50" />
+    <Property Name="name_comand2" Type="nvarchar" MaxLength="50" />
+    <Property Name="point" Type="nvarchar" MaxLength="50" />
+    <Property Name="place_footballmatch" Type="nvarchar" MaxLength="50" />
+    <Property Name="id_team" Type="int" />
+    <Property Name="id_footballplayer" Type="int" />
+  </EntityType>
+  <EntityType Name="footballplayers">
+    <Key>
+      <PropertyRef Name="id_footballplayer" />
+    </Key>
+    <Property Name="id_footballplayer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name_team" Type="nvarchar" MaxLength="50" />
+    <Property Name="FIO" Type="nvarchar" MaxLength="50" />
+    <Property Name="salary" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="teams">
+    <Key>
+      <PropertyRef Name="id_team" />
+    </Key>
+    <Property Name="id_team" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name_team" Type="nvarchar" MaxLength="50" />
+    <Property Name="city" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_footballmatches_footballplayers">
+    <End Role="footballplayers" Type="Self.footballplayers" Multiplicity="0..1" />
+    <End Role="footballmatches" Type="Self.footballmatches" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="footballplayers">
+        <PropertyRef Name="id_footballplayer" />
+      </Principal>
+      <Dependent Role="footballmatches">
+        <PropertyRef Name="id_footballplayer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_footballmatches_teams">
+    <End Role="teams" Type="Self.teams" Multiplicity="0..1" />
+    <End Role="footballmatches" Type="Self.footballmatches" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="teams">
+        <PropertyRef Name="id_team" />
+      </Principal>
+      <Dependent Role="footballmatches">
+        <PropertyRef Name="id_team" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="demofootballModelStoreContainer">
+    <EntitySet Name="footballmatches" EntityType="Self.footballmatches" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="footballplayers" EntityType="Self.footballplayers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="teams" EntityType="Self.teams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_footballmatches_footballplayers" Association="Self.FK_footballmatches_footballplayers">
+      <End Role="footballplayers" EntitySet="footballplayers" />
+      <End Role="footballmatches" EntitySet="footballmatches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_footballmatches_teams" Association="Self.FK_footballmatches_teams">
+      <End Role="teams" EntitySet="teams" />
+      <End Role="footballmatches" EntitySet="footballmatches" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

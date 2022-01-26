@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="demoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="id_client" />
+    </Key>
+    <Property Name="id_client" Type="Int32" Nullable="false" />
+    <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_club" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="fintess_clubs" Relationship="Self.FK_client_fintess_clubs" FromRole="client" ToRole="fintess_clubs" />
+  </EntityType>
+  <EntityType Name="fintess_clubs">
+    <Key>
+      <PropertyRef Name="id_fitness_club" />
+    </Key>
+    <Property Name="id_fitness_club" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="waterpool" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="start_work" Type="DateTime" Precision="0" />
+    <Property Name="web_site" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="id_lessons" Type="Int32" Nullable="false" />
+    <Property Name="id_types" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="client" Relationship="Self.FK_client_fintess_clubs" FromRole="fintess_clubs" ToRole="client" />
+    <NavigationProperty Name="lessons" Relationship="Self.FK_fintess_clubs_lessons" FromRole="fintess_clubs" ToRole="lessons" />
+    <NavigationProperty Name="types_sport" Relationship="Self.FK_fintess_clubs_types_sport" FromRole="fintess_clubs" ToRole="types_sport" />
+  </EntityType>
+  <EntityType Name="lessons">
+    <Key>
+      <PropertyRef Name="id_lesson" />
+    </Key>
+    <Property Name="id_lesson" Type="Int32" Nullable="false" />
+    <Property Name="name_sport" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="methot" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="fintess_clubs" Relationship="Self.FK_fintess_clubs_lessons" FromRole="lessons" ToRole="fintess_clubs" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="types_sport">
+    <Key>
+      <PropertyRef Name="id_types_sport" />
+    </Key>
+    <Property Name="id_types_sport" Type="Int32" Nullable="false" />
+    <Property Name="name_sport" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="discription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="fintess_clubs" Relationship="Self.FK_fintess_clubs_types_sport" FromRole="types_sport" ToRole="fintess_clubs" />
+  </EntityType>
+  <Association Name="FK_client_fintess_clubs">
+    <End Role="fintess_clubs" Type="Self.fintess_clubs" Multiplicity="1" />
+    <End Role="client" Type="Self.client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="fintess_clubs">
+        <PropertyRef Name="id_fitness_club" />
+      </Principal>
+      <Dependent Role="client">
+        <PropertyRef Name="id_club" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_fintess_clubs_lessons">
+    <End Role="lessons" Type="Self.lessons" Multiplicity="1" />
+    <End Role="fintess_clubs" Type="Self.fintess_clubs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lessons">
+        <PropertyRef Name="id_lesson" />
+      </Principal>
+      <Dependent Role="fintess_clubs">
+        <PropertyRef Name="id_lessons" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_fintess_clubs_types_sport">
+    <End Role="types_sport" Type="Self.types_sport" Multiplicity="1" />
+    <End Role="fintess_clubs" Type="Self.fintess_clubs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="types_sport">
+        <PropertyRef Name="id_types_sport" />
+      </Principal>
+      <Dependent Role="fintess_clubs">
+        <PropertyRef Name="id_types" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="demoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="client" EntityType="Self.client" />
+    <EntitySet Name="fintess_clubs" EntityType="Self.fintess_clubs" />
+    <EntitySet Name="lessons" EntityType="Self.lessons" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="types_sport" EntityType="Self.types_sport" />
+    <AssociationSet Name="FK_client_fintess_clubs" Association="Self.FK_client_fintess_clubs">
+      <End Role="fintess_clubs" EntitySet="fintess_clubs" />
+      <End Role="client" EntitySet="client" />
+    </AssociationSet>
+    <AssociationSet Name="FK_fintess_clubs_lessons" Association="Self.FK_fintess_clubs_lessons">
+      <End Role="lessons" EntitySet="lessons" />
+      <End Role="fintess_clubs" EntitySet="fintess_clubs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_fintess_clubs_types_sport" Association="Self.FK_fintess_clubs_types_sport">
+      <End Role="types_sport" EntitySet="types_sport" />
+      <End Role="fintess_clubs" EntitySet="fintess_clubs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

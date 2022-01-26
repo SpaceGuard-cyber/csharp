@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="igraModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="clients">
+    <Key>
+      <PropertyRef Name="id_clients" />
+    </Key>
+    <Property Name="id_clients" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="count" Type="Int32" />
+    <NavigationProperty Name="game" Relationship="Self.FK_game_clients" FromRole="clients" ToRole="game" />
+  </EntityType>
+  <EntityType Name="game">
+    <Key>
+      <PropertyRef Name="id_game" />
+    </Key>
+    <Property Name="id_game" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_game" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="relise" Type="DateTime" Precision="0" />
+    <Property Name="id_client" Type="Int32" />
+    <Property Name="id_gente" Type="Int32" />
+    <NavigationProperty Name="clients" Relationship="Self.FK_game_clients" FromRole="game" ToRole="clients" />
+    <NavigationProperty Name="genre" Relationship="Self.FK_game_genre" FromRole="game" ToRole="genre" />
+  </EntityType>
+  <EntityType Name="genre">
+    <Key>
+      <PropertyRef Name="id_genre" />
+    </Key>
+    <Property Name="id_genre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_genre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="game" Relationship="Self.FK_game_genre" FromRole="genre" ToRole="game" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_game_clients">
+    <End Role="clients" Type="Self.clients" Multiplicity="0..1" />
+    <End Role="game" Type="Self.game" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clients">
+        <PropertyRef Name="id_clients" />
+      </Principal>
+      <Dependent Role="game">
+        <PropertyRef Name="id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_game_genre">
+    <End Role="genre" Type="Self.genre" Multiplicity="0..1" />
+    <End Role="game" Type="Self.game" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="genre">
+        <PropertyRef Name="id_genre" />
+      </Principal>
+      <Dependent Role="game">
+        <PropertyRef Name="id_gente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="igraEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="clients" EntityType="Self.clients" />
+    <EntitySet Name="game" EntityType="Self.game" />
+    <EntitySet Name="genre" EntityType="Self.genre" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_game_clients" Association="Self.FK_game_clients">
+      <End Role="clients" EntitySet="clients" />
+      <End Role="game" EntitySet="game" />
+    </AssociationSet>
+    <AssociationSet Name="FK_game_genre" Association="Self.FK_game_genre">
+      <End Role="genre" EntitySet="genre" />
+      <End Role="game" EntitySet="game" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="democinemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cinema">
+          <Key>
+            <PropertyRef Name="id_cinema" />
+          </Key>
+          <Property Name="id_cinema" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="zali" Type="int" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="film">
+          <Key>
+            <PropertyRef Name="id_film" />
+          </Key>
+          <Property Name="id_film" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_film" Type="nvarchar" MaxLength="50" />
+          <Property Name="time" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="seance">
+          <Key>
+            <PropertyRef Name="id_seance" />
+          </Key>
+          <Property Name="id_seance" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="nvarchar" MaxLength="50" />
+          <Property Name="time" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_cinema" Type="int" />
+          <Property Name="number_zal" Type="int" />
+          <Property Name="type_seance" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_film" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_seance_cinema">
+          <End Role="cinema" Type="Self.cinema" Multiplicity="0..1" />
+          <End Role="seance" Type="Self.seance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cinema">
+              <PropertyRef Name="id_cinema" />
+            </Principal>
+            <Dependent Role="seance">
+              <PropertyRef Name="id_cinema" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_seance_film">
+          <End Role="film" Type="Self.film" Multiplicity="0..1" />
+          <End Role="seance" Type="Self.seance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="film">
+              <PropertyRef Name="id_film" />
+            </Principal>
+            <Dependent Role="seance">
+              <PropertyRef Name="id_film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="democinemaModelStoreContainer">
+          <EntitySet Name="cinema" EntityType="Self.cinema" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="film" EntityType="Self.film" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="seance" EntityType="Self.seance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_seance_cinema" Association="Self.FK_seance_cinema">
+            <End Role="cinema" EntitySet="cinema" />
+            <End Role="seance" EntitySet="seance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_seance_film" Association="Self.FK_seance_film">
+            <End Role="film" EntitySet="film" />
+            <End Role="seance" EntitySet="seance" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="democinemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cinema">
+          <Key>
+            <PropertyRef Name="id_cinema" />
+          </Key>
+          <Property Name="id_cinema" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="zali" Type="Int32" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="seances" Relationship="Self.FK_seance_cinema" FromRole="cinema" ToRole="seance" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="film">
+          <Key>
+            <PropertyRef Name="id_film" />
+          </Key>
+          <Property Name="id_film" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_film" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="seances" Relationship="Self.FK_seance_film" FromRole="film" ToRole="seance" />
+        </EntityType>
+        <EntityType Name="seance">
+          <Key>
+            <PropertyRef Name="id_seance" />
+          </Key>
+          <Property Name="id_seance" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_cinema" Type="Int32" />
+          <Property Name="number_zal" Type="Int32" />
+          <Property Name="type_seance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_film" Type="Int32" />
+          <NavigationProperty Name="cinema" Relationship="Self.FK_seance_cinema" FromRole="seance" ToRole="cinema" />
+          <NavigationProperty Name="film" Relationship="Self.FK_seance_film" FromRole="seance" ToRole="film" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_seance_cinema">
+          <End Role="cinema" Type="Self.cinema" Multiplicity="0..1" />
+          <End Role="seance" Type="Self.seance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cinema">
+              <PropertyRef Name="id_cinema" />
+            </Principal>
+            <Dependent Role="seance">
+              <PropertyRef Name="id_cinema" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_seance_film">
+          <End Role="film" Type="Self.film" Multiplicity="0..1" />
+          <End Role="seance" Type="Self.seance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="film">
+              <PropertyRef Name="id_film" />
+            </Principal>
+            <Dependent Role="seance">
+              <PropertyRef Name="id_film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="entity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cinemas" EntityType="Self.cinema" />
+          <EntitySet Name="films" EntityType="Self.film" />
+          <EntitySet Name="seances" EntityType="Self.seance" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_seance_cinema" Association="Self.FK_seance_cinema">
+            <End Role="cinema" EntitySet="cinemas" />
+            <End Role="seance" EntitySet="seances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_seance_film" Association="Self.FK_seance_film">
+            <End Role="film" EntitySet="films" />
+            <End Role="seance" EntitySet="seances" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="democinemaModelStoreContainer" CdmEntityContainer="entity">
+          <EntitySetMapping Name="cinemas">
+            <EntityTypeMapping TypeName="democinemaModel.cinema">
+              <MappingFragment StoreEntitySet="cinema">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id_cinema" ColumnName="id_cinema" />
+                <ScalarProperty Name="zali" ColumnName="zali" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="films">
+            <EntityTypeMapping TypeName="democinemaModel.film">
+              <MappingFragment StoreEntitySet="film">
+                <ScalarProperty Name="id_film" ColumnName="id_film" />
+                <ScalarProperty Name="name_film" ColumnName="name_film" />
+                <ScalarProperty Name="time" ColumnName="time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="seances">
+            <EntityTypeMapping TypeName="democinemaModel.seance">
+              <MappingFragment StoreEntitySet="seance">
+                <ScalarProperty Name="id_seance" ColumnName="id_seance" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="id_cinema" ColumnName="id_cinema" />
+                <ScalarProperty Name="number_zal" ColumnName="number_zal" />
+                <ScalarProperty Name="type_seance" ColumnName="type_seance" />
+                <ScalarProperty Name="id_film" ColumnName="id_film" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="democinemaModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

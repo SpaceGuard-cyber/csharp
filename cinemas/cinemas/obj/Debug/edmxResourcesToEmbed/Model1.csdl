@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="democinemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="cinema">
+    <Key>
+      <PropertyRef Name="id_cinema" />
+    </Key>
+    <Property Name="id_cinema" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="zali" Type="Int32" />
+    <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="seances" Relationship="Self.FK_seance_cinema" FromRole="cinema" ToRole="seance" />
+  </EntityType>
+  <EntityType Name="film">
+    <Key>
+      <PropertyRef Name="id_film" />
+    </Key>
+    <Property Name="id_film" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_film" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="seances" Relationship="Self.FK_seance_film" FromRole="film" ToRole="seance" />
+  </EntityType>
+  <EntityType Name="seance">
+    <Key>
+      <PropertyRef Name="id_seance" />
+    </Key>
+    <Property Name="id_seance" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_cinema" Type="Int32" />
+    <Property Name="number_zal" Type="Int32" />
+    <Property Name="type_seance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_film" Type="Int32" />
+    <NavigationProperty Name="cinema" Relationship="Self.FK_seance_cinema" FromRole="seance" ToRole="cinema" />
+    <NavigationProperty Name="film" Relationship="Self.FK_seance_film" FromRole="seance" ToRole="film" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_seance_cinema">
+    <End Role="cinema" Type="Self.cinema" Multiplicity="0..1" />
+    <End Role="seance" Type="Self.seance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cinema">
+        <PropertyRef Name="id_cinema" />
+      </Principal>
+      <Dependent Role="seance">
+        <PropertyRef Name="id_cinema" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_seance_film">
+    <End Role="film" Type="Self.film" Multiplicity="0..1" />
+    <End Role="seance" Type="Self.seance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="film">
+        <PropertyRef Name="id_film" />
+      </Principal>
+      <Dependent Role="seance">
+        <PropertyRef Name="id_film" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="democinemaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="cinemas" EntityType="Self.cinema" />
+    <EntitySet Name="films" EntityType="Self.film" />
+    <EntitySet Name="seances" EntityType="Self.seance" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_seance_cinema" Association="Self.FK_seance_cinema">
+      <End Role="cinema" EntitySet="cinemas" />
+      <End Role="seance" EntitySet="seances" />
+    </AssociationSet>
+    <AssociationSet Name="FK_seance_film" Association="Self.FK_seance_film">
+      <End Role="film" EntitySet="films" />
+      <End Role="seance" EntitySet="seances" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
